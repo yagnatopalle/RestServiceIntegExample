@@ -1,0 +1,128 @@
+swagger: "2.0"
+info:
+  description: "Swagger spec created for ING coding interview."
+  version: "1.0.0"
+  title: "User Service"
+host: "localhost:8080"
+basePath: "/"
+tags:
+- name: "User Details"
+  description: "Everything about Users"
+schemes:
+- "http"
+paths:
+  /userdetails/{empId}:
+    get:
+      tags:
+        - "User Details"
+      summary: "Gets User details by Employee Id"
+      operationId: "getUserById"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:  
+      - name: "empId"
+        in: "path"
+        description: "Employee Id"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Ok"
+          schema:
+            $ref: "#/definitions/UserDetails"
+        "400":
+          description: "Invalid Emp ID"
+        "404":
+          description: "Emp ID not found"
+    put:
+      tags:
+        - "User Details"
+      summary: "Update User details by Employee Id"
+      operationId: "UpdateUserById"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:  
+      - name: "empId"
+        in: "path"
+        description: "Employee Id"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "request body to update given Employee details"
+        required: true
+        schema:
+          $ref: "#/definitions/RequestData"  
+      responses:
+        "204":
+          description: "No Content"
+        "400":
+          description: "Invalid Emp ID"
+        "404":
+          description: "Emp ID not found"
+    
+  
+definitions:
+  
+  RequestData:
+    type: "object"
+    required:
+      - title
+      - firstname
+      - lastname
+      - gender
+      - address
+    properties:
+      title:
+        type: "string"
+        maxLength: 20
+      firstname:
+        type: "string"
+        maxLength: 50
+      lastname:
+        type: "string"
+        maxLength: 50
+      gender:
+        type: "string"
+        maxLength: 20
+      address:
+        $ref: "#/definitions/Address"
+    
+  Address:
+    type: object
+    required:
+      - street
+      - city
+      - state
+      - postcode
+    properties:
+      street:
+        type: "string"
+        maxLength: 100
+      city:
+        type: "string"
+        maxLength: 50
+      state:
+        type: "string"
+        maxLength: 20
+      postcode:
+        type: "integer"
+        format: "int32"
+        maxLength: 4
+  
+  UserDetails:
+    type: "object"
+    allOf:
+      - type: "object"
+        properties:
+          empId:
+            type: "integer"
+            format: "int64"
+      - $ref: "#/definitions/RequestData"      
+    
