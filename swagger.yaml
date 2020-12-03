@@ -7,7 +7,7 @@ host: "localhost:8080"
 basePath: "/"
 tags:
 - name: "User Details"
-  description: "Everything about Users"
+  description: "RESTFul services for servicing Users."
 schemes:
 - "http"
 paths:

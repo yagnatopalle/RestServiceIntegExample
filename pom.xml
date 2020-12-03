@@ -21,11 +21,6 @@
 		<java.version>1.8</java.version>
 	</properties>
 
-
-	<!-- <dependencyManagement> <dependencies> <dependency> <groupId>org.springframework.boot</groupId> 
-		<artifactId>spring-boot-dependencies</artifactId> <version>2.3.3.RELEASE</version> 
-		<type>pom</type> <scope>import</scope> </dependency> </dependencies> </dependencyManagement> -->
-
 	<!-- Application Dependencies -->
 	<dependencies>
 		<dependency>
@@ -56,15 +51,50 @@
 			<artifactId>validation-api</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
-		<sourceDirectory>src/main/java</sourceDirectory>
-		<outputDirectory>target/classes</outputDirectory>
 		<plugins>
+
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-gen-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${build.directory}/generated-sources/swagger</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 
 			<!-- Swagger codegen plugin which creates required files from swagger 
@@ -80,12 +110,18 @@
 						</goals>
 						<configuration>
 							<inputSpec>${project.basedir}/swagger.yaml</inputSpec>
+							<output>${build.directory}/generated-sources/swagger</output>
 							<language>spring</language>
 							<modelPackage>au.com.interview.ing.model</modelPackage>
 							<apiPackage>au.com.interview.ing.api</apiPackage>
 							<generateModelDocumentation>false</generateModelDocumentation>
 							<generateModelTests>false</generateModelTests>
 							<generateSupportingFiles>false</generateSupportingFiles>
+							<configOptions>
+								<java8>true</java8>
+								<interfaceOnly>true</interfaceOnly>
+								<useBeanValidation>true</useBeanValidation>
+							</configOptions>
 						</configuration>
 					</execution>
 				</executions>
