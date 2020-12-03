@@ -5,10 +5,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerTest {
+
+	private static String BASE_PATH = "http://localhost:";
 
 	@LocalServerPort
 	private int port;
@@ -16,7 +17,6 @@ public class UserControllerTest {
 	@Test
 	public void testGetUserByIdSuccess() {
 
-		RestAssured.when().get("/userdetails/123").then().assertThat().contentType(ContentType.JSON).and()
-				.statusCode(200);
+		RestAssured.when().get(BASE_PATH + port + "/userdetails/123").then().assertThat().statusCode(200);
 	}
 }
