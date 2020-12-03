@@ -7,7 +7,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import io.restassured.RestAssured;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UserControllerTest {
+class UserControllerTest {
 
 	private static String BASE_PATH = "http://localhost:";
 
@@ -15,7 +15,7 @@ public class UserControllerTest {
 	private int port;
 
 	@Test
-	public void testGetUserByIdSuccess() {
+	void testGetUserByIdSuccess() {
 
 		RestAssured.when().get(BASE_PATH + port + "/userdetails/123").then().assertThat().statusCode(200);
 	}
