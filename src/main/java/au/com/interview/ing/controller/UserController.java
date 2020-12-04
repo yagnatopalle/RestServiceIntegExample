@@ -1,20 +1,24 @@
-package au.com.interview.ing.controllers;
+package au.com.interview.ing.controller;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import au.com.interview.ing.dao.UserDAO;
 import au.com.interview.ing.model.RequestData;
 import au.com.interview.ing.model.ResponseData;
+import au.com.interview.ing.util.ApplicationUtil;
 
 /**
  * Main controller class for the User Details API.
@@ -23,9 +27,18 @@ import au.com.interview.ing.model.ResponseData;
  *
  */
 @RestController
+@Validated
 public class UserController {
 
-	public static final Logger log = LoggerFactory.getLogger(UserController.class);
+	private static final Logger log = LoggerFactory.getLogger(UserController.class);
+
+	private final UserDAO userDao;
+
+	public UserController(UserDAO userDao) {
+
+		super();
+		this.userDao = userDao;
+	}
 
 	/**
 	 * This code implements the GET method for the User Service.
@@ -34,16 +47,17 @@ public class UserController {
 	 * @return {@link UserDetails}
 	 */
 	@GetMapping(path = "/userdetails/{empId}", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseData> getUserById(@PathVariable("empId") Long empId) {
+	public ResponseEntity<ResponseData> getUserById(
+			@PathVariable("empId") @Pattern(regexp = ApplicationUtil.PATTERN, message = ApplicationUtil.PATTERN_ERROR) String empId) {
 
 		log.debug("Entering UserController.getUserById() for Employee Id {}", empId);
 
-		log.debug("Exiting UserController.getUserById() successfully for Employee Id {}", empId);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return ResponseEntity.ok(userDao.findUserByEmpId(Long.parseLong(empId)));
 	}
 
 	@PutMapping(path = "/userdetails/{empId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> updateUserById(@PathVariable("empId") Long empId,
+	public ResponseEntity<Void> updateUserById(
+			@PathVariable("empId") @Pattern(regexp = ApplicationUtil.PATTERN, message = ApplicationUtil.PATTERN_ERROR) String empId,
 			@Valid @RequestBody RequestData body) {
 
 		log.debug("Entering UserController.getUserById() for Employee Id {}", empId);
