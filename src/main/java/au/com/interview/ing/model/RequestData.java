@@ -1,7 +1,6 @@
 package au.com.interview.ing.model;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.validation.annotation.Validated;
@@ -17,27 +16,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Validated
 public class RequestData {
 
-	@NotNull
-	@Size(max = 20)
+	@Size(max = 20, message = "Title can be of max 20 characters.")
 	@JsonProperty("title")
 	private String title;
 
-	@NotNull
-	@Size(max = 50)
+	@Size(max = 50, message = "First Name can be of max 50 characters.")
 	@JsonProperty("firstname")
 	private String firstname;
 
-	@NotNull
-	@Size(max = 50)
+	@Size(max = 50, message = "Last Name can be of max 50 characters.")
 	@JsonProperty("lastname")
 	private String lastname;
 
-	@NotNull
-	@Size(max = 20)
+	@Size(max = 20, message = "Gender can be of max 20 characters.")
 	@JsonProperty("gender")
 	private String gender;
 
-	@NotNull
 	@Valid
 	@JsonProperty("address")
 	private Address address;

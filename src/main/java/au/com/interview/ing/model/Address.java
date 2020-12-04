@@ -1,6 +1,7 @@
 package au.com.interview.ing.model;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import org.springframework.validation.annotation.Validated;
@@ -17,23 +18,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Validated
 public class Address {
 
-	@NotNull
-	@Size(max = 100)
+	@Size(max = 100, message = "Street can be of max 100 characters.")
 	@JsonProperty("street")
 	private String street;
 
-	@NotNull
-	@Size(max = 50)
+	@Size(max = 50, message = "City can be of max 50 characters.")
 	@JsonProperty("city")
 	private String city;
 
-	@NotNull
-	@Size(max = 20)
+	@Size(max = 25, message = "State can be of max 25 characters.")
 	@JsonProperty("state")
 	private String state;
 
-	@NotNull
-	@Size(max = 4)
+	@Min(value = 999, message = "Postcode must be a 4 digit number.")
+	@Max(value = 10000, message = "Postcode must be a 4 digit number.")
 	@JsonProperty("postcode")
 	private Integer postcode;
 

@@ -1,11 +1,15 @@
 package au.com.interview.ing.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.ConstraintViolationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,7 +28,7 @@ public class UserControllerAdvice {
 	}
 
 	@ExceptionHandler(ConstraintViolationException.class)
-	public ResponseEntity<String> handle400Errors(ConstraintViolationException cve) {
+	public ResponseEntity<String> handle400ArgErrors(ConstraintViolationException cve) {
 
 		String errStr = cve.getMessage();
 
@@ -39,10 +43,10 @@ public class UserControllerAdvice {
 		return new ResponseEntity<>(errStr, HttpStatus.BAD_REQUEST);
 	}
 
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<String> handle500Errors(Exception e) {
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<List<String>> handle400BeanErrors(MethodArgumentNotValidException mae) {
 
-		log.error(e.getMessage());
-		return new ResponseEntity<>("Something went wrong, see logs", HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(mae.getBindingResult().getAllErrors().stream().map(e -> e.getDefaultMessage())
+				.collect(Collectors.toList()), HttpStatus.BAD_REQUEST);
 	}
 }

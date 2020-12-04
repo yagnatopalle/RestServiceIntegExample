@@ -41,7 +41,7 @@ public class UserController {
 	}
 
 	/**
-	 * This code implements the GET method for the User Service.
+	 * GET method for the User Service.
 	 *
 	 * @param empId
 	 * @return {@link ResponseData}
@@ -50,19 +50,27 @@ public class UserController {
 	public ResponseEntity<ResponseData> getUserById(
 			@PathVariable("empId") @Pattern(regexp = ApplicationUtil.PATTERN, message = ApplicationUtil.PATTERN_ERROR) String empId) {
 
-		log.debug("Entering UserController.getUserById() for Employee Id {}", empId);
+		log.debug("UserController.getUserById() for Employee Id {}", empId);
 
 		return ResponseEntity.ok(userDao.findUserByEmpId(Long.parseLong(empId)));
 	}
 
+	/**
+	 * POST method for User service. Will update both User and Address details.
+	 *
+	 * @param empId
+	 * @param {@link RequestData}
+	 * @return
+	 */
 	@PutMapping(path = "/userdetails/{empId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> updateUserById(
 			@PathVariable("empId") @Pattern(regexp = ApplicationUtil.PATTERN, message = ApplicationUtil.PATTERN_ERROR) String empId,
 			@Valid @RequestBody RequestData body) {
 
-		log.debug("Entering UserController.getUserById() for Employee Id {}", empId);
+		log.debug("UserController.updateUserById() for Employee Id {}", empId);
 
-		log.debug("Exiting UserController.getUserById() successfully for Employee Id {}", empId);
+		userDao.updateUserByEmpid(Long.parseLong(empId), body);
+
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 

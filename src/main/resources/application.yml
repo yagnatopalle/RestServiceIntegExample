@@ -3,6 +3,7 @@ logging:
   level:
     org.springframework: ERROR
     au.com.interview : DEBUG
+    root: ERROR
 
 # H2 config
 spring:

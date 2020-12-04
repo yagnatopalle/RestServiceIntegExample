@@ -18,7 +18,7 @@ import javax.persistence.Table;
 public class UserEntity {
 
 	@Id
-	@Column(name = "empid")
+	@Column(name = "empid", updatable = false)
 	private long empId;
 
 	@Column(name = "addressid", nullable = false)
@@ -48,10 +48,6 @@ public class UserEntity {
 
 	public long getEmpId() {
 		return empId;
-	}
-
-	public void setEmpId(long empId) {
-		this.empId = empId;
 	}
 
 	public long getAddressId() {
