@@ -1,0 +1,286 @@
+{
+	"info": {
+		"_postman_id": "b76779a9-e635-498f-ae89-1777ce83a1ad",
+		"name": "User Service",
+		"description": "Swagger spec created for ING coding interview.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "userdetails",
+			"item": [
+				{
+					"name": "Gets User details by Employee Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/userdetails/1232854",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userdetails",
+								"1232854"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/userdetails/:empId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"userdetails",
+										":empId"
+									],
+									"variable": [
+										{
+											"key": "empId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"empId\": 11362048,\n \"title\": \"lab\",\n \"firstname\": \"\",\n \"lastname\": \"offi\",\n \"gender\": \"elit\",\n \"address\": {\n  \"street\": \"cu\",\n  \"city\": \"L\",\n  \"state\": \"d\",\n  \"postcode\": -52293573\n }\n}"
+						},
+						{
+							"name": "Emp ID not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/userdetails/:empId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"userdetails",
+										":empId"
+									],
+									"variable": [
+										{
+											"key": "empId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Invalid Emp ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/userdetails/:empId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"userdetails",
+										":empId"
+									],
+									"variable": [
+										{
+											"key": "empId"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Update User details by Employee Id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"MRS\",\n    \"firstname\": \"FIRST NAME\",\n    \"lastname\": \"LAST NAME\",\n    \"gender\": \"FEMALE\",\n    \"address\": {\n        \"street\": \"1 Park St\",\n        \"city\": \"Sydney\",\n        \"state\": \"NSW\",\n        \"postcode\": 2000\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/userdetails/1232854",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userdetails",
+								"1232854"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "No Content",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"<string>\",\n    \"firstname\": \"<string>\",\n    \"lastname\": \"<string>\",\n    \"gender\": \"<string>\",\n    \"address\": {\n        \"street\": \"\",\n        \"city\": \"s\",\n        \"state\": \"id p\",\n        \"postcode\": -63026094\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/userdetails/:empId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"userdetails",
+										":empId"
+									],
+									"variable": [
+										{
+											"key": "empId"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Invalid Emp ID",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"<string>\",\n    \"firstname\": \"<string>\",\n    \"lastname\": \"<string>\",\n    \"gender\": \"<string>\",\n    \"address\": {\n        \"street\": \"\",\n        \"city\": \"s\",\n        \"state\": \"id p\",\n        \"postcode\": -63026094\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/userdetails/:empId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"userdetails",
+										":empId"
+									],
+									"variable": [
+										{
+											"key": "empId"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Emp ID not found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"<string>\",\n    \"firstname\": \"<string>\",\n    \"lastname\": \"<string>\",\n    \"gender\": \"<string>\",\n    \"address\": {\n        \"street\": \"\",\n        \"city\": \"s\",\n        \"state\": \"id p\",\n        \"postcode\": -63026094\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/userdetails/:empId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"userdetails",
+										":empId"
+									],
+									"variable": [
+										{
+											"key": "empId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"variable": [
+		{
+			"id": "baseUrl",
+			"key": "baseUrl",
+			"value": "http://localhost:8080/",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

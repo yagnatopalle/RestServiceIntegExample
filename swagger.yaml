@@ -72,12 +72,6 @@ definitions:
   
   RequestData:
     type: "object"
-    required:
-      - title
-      - firstname
-      - lastname
-      - gender
-      - address
     properties:
       title:
         type: "string"
@@ -96,11 +90,6 @@ definitions:
     
   Address:
     type: object
-    required:
-      - street
-      - city
-      - state
-      - postcode
     properties:
       street:
         type: "string"
@@ -110,7 +99,7 @@ definitions:
         maxLength: 50
       state:
         type: "string"
-        maxLength: 20
+        maxLength: 25
       postcode:
         type: "integer"
         format: "int32"
