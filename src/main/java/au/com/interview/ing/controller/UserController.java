@@ -44,7 +44,7 @@ public class UserController {
 	 * This code implements the GET method for the User Service.
 	 *
 	 * @param empId
-	 * @return {@link UserDetails}
+	 * @return {@link ResponseData}
 	 */
 	@GetMapping(path = "/userdetails/{empId}", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseData> getUserById(
