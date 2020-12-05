@@ -16,7 +16,7 @@ This application uses the below technologies for build, run and testing.
 | RestAssured | 3.3.0 | Managed by application |
 
 ### High Level Application Design
-[seqDiagram]
+![Application Sequence Diagram][seqDiagram]
 ### Database Model
 
 This application uses in-memory H2 database. 
@@ -24,7 +24,7 @@ This application uses in-memory H2 database.
 * USERS table has all the USER related data along with with Foreign key reference (ADDRESSID) to ADDRESS Table
 * ADDRESS table has all address details of the user. There is no update to this table, anytime address is changed by PUT call, a new row is created and the corresponding entry in USERS table is updated with latest id.
 
-[DBModel]
+![Database Model][dbmodel]
 
 ### Build
 Clone the repository from github to local machine by navigating (or creating) to a folder/directory, then run the below command from git (or by using plugins in IDE)
@@ -60,7 +60,7 @@ Both the options will trigger the app deployment and after few seconds (5-10 sec
 A log file `UserServiceApp.log` within `logs` folder would also be updating and can be used to monitor application logs.
 
 ### Accessing/invoking the services
-The applocation will by default run on port `8080`. There are 2 services which can be used, and the application pre-loads the DB with bunch of [mock data](#Preloaded data) which can also be used in the services.
+The application will by default run on port `8080`. There are 2 services which can be used, and the application pre-loads the DB with bunch of [mock data](#Preloaded-data) which can also be used in the services.
 
 Postman
 
@@ -144,7 +144,7 @@ The data is loaded into H2 When the application loads, if additional Mock data i
 | 341699250 | MR | FN14 | LN14 | FEMALE | 4550 KENT ST | SYDNEY | NSW | 2000 |
 
 [seqDiagram]: <>
-[DBModel]: <UserServiceDataModel.PNG>
+[DBModel]: <UserServiceDataModel.PNG?raw=true>
 [pc]: <UserService.postman_collection.json>
 [swagger]: <swagger.yaml>
 [se]: <https://editor.swagger.io>
