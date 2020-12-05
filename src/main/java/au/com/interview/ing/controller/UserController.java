@@ -50,11 +50,11 @@ public class UserController {
 	public ResponseEntity<ResponseData> getUserById(
 			@PathVariable("empId") @Pattern(regexp = ApplicationUtil.PATTERN, message = ApplicationUtil.PATTERN_ERROR) String empId) {
 
-		log.debug("Entering UserController.getUserById() for Employee Id {}", empId);
+		log.info("Entering UserController.getUserById() for Employee Id {}", empId);
 
 		ResponseData data = userDao.findUserByEmpId(Long.parseLong(empId));
 
-		log.debug("Exiting UserController.getUserById() for Employee Id {}", empId);
+		log.info("Exiting UserController.getUserById() for Employee Id {}", empId);
 
 		return ResponseEntity.ok(data);
 	}
@@ -71,11 +71,11 @@ public class UserController {
 			@PathVariable("empId") @Pattern(regexp = ApplicationUtil.PATTERN, message = ApplicationUtil.PATTERN_ERROR) String empId,
 			@Valid @RequestBody RequestData body) {
 
-		log.debug("Entering UserController.updateUserById() for Employee Id {}", empId);
+		log.info("Entering UserController.updateUserById() for Employee Id {}", empId);
 
 		userDao.updateUserByEmpid(Long.parseLong(empId), body);
 
-		log.debug("Exiting UserController.updateUserById() for Employee Id {}", empId);
+		log.info("Exiting UserController.updateUserById() for Employee Id {}", empId);
 
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

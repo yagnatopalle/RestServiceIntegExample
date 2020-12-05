@@ -83,7 +83,7 @@ public class UserDAOImpl implements UserDAO {
 
 		userRepository.save(userEntity);
 
-		log.debug("User table has been udpated successfully. Exiting function for Employee Id {}", empId);
+		log.debug("User table has been updated successfully. Exiting function for Employee Id {}", empId);
 	}
 
 	private UserEntity getUserDetails(long empId) {

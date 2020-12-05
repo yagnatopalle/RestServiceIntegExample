@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+	<property name="LOG_HOME" value="logs" />
+	<appender name="Console"
+		class="ch.qos.logback.core.ConsoleAppender">
+
+		<encoder>
+			<pattern>%d [%thread] %-5level %-50logger{40} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="RollingFile"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/UserServiceApp.log</file>
+		<encoder>
+			<pattern>%d [%thread] %-5level %-50logger{40} - %msg%n</pattern>
+		</encoder>
+
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>UserServiceApp-%d{yyyy-MM-dd}.%i.log
+			</fileNamePattern>
+			<maxFileSize>5MB</maxFileSize>
+			<maxHistory>20</maxHistory>
+			<totalSizeCap>100MB</totalSizeCap>
+			<cleanHistoryOnStart>true</cleanHistoryOnStart>
+		</rollingPolicy>
+	</appender>
+
+	<logger name="au.com.interview.ing" level="DEBUG"
+		additivity="false">
+		<appender-ref ref="RollingFile" />
+	</logger>
+
+	<logger name="au.com.interview.ing.Application" level="INFO"
+		additivity="false">
+		<appender-ref ref="RollingFile" />
+		<appender-ref ref="Console" />
+	</logger>
+	
+	<logger name="au.com.interview.ing.controller" level="INFO"
+		additivity="false">
+		<appender-ref ref="RollingFile" />
+		<appender-ref ref="Console" />
+	</logger>
+
+	<logger name="or.springframework" level="ERROR"
+		additivity="false">
+		<appender-ref ref="RollingFile" />
+	</logger>
+
+	<root level="ERROR">
+		<appender-ref ref="RollingFile" />
+	</root>
+</configuration>
