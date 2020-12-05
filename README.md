@@ -16,7 +16,8 @@ This application uses the below technologies for build, run and testing.
 | RestAssured | 3.3.0 | Managed by application |
 
 ### High Level Application Design
-![Application Sequence Diagram][seqDiagram]
+![Application Sequence Diagram GET][seqDiagramGet]
+![Application Sequence Diagram PUT][seqDiagramPut]
 ### Database Model
 
 This application uses in-memory H2 database. 
@@ -143,8 +144,9 @@ The data is loaded into H2 When the application loads, if additional Mock data i
 | 990155538 | MR | FN13 | LN13 | MALE | 9225 KENT ST | SYDNEY | NSW | 2000 |
 | 341699250 | MR | FN14 | LN14 | FEMALE | 4550 KENT ST | SYDNEY | NSW | 2000 |
 
-[seqDiagram]: <>
-[DBModel]: <UserServiceDataModel.PNG?raw=true>
+[seqDiagramGet]: <docs/GetSeqDiagram.PNG?raw=true>
+[seqDiagramPut]: <docs/PutSeqDiagram.PNG?raw=true>
+[DBModel]: <docs/UserServiceDataModel.PNG?raw=true>
 [pc]: <UserService.postman_collection.json>
 [swagger]: <swagger.yaml>
 [se]: <https://editor.swagger.io>

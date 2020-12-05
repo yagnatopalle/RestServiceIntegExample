@@ -1,0 +1,28 @@
+title User Service GET flow
+actor User
+User->+UserController: GET /userdetails/{empId}
+note over UserController: getUserById()
+alt: Employee Id is numeric
+UserController->+UserDaoImpl: findUserByEmpId(empId)
+UserDaoImpl->+UserDaoImpl: getUserDetails(empId)
+UserDaoImpl->Database: findById(empId)
+Database->UserDaoImpl: response
+UserDaoImpl->+ApplicationUtils: getOrElseThrow()
+alt: User is available in DB
+ApplicationUtils->-UserDaoImpl: user data
+UserDaoImpl->-UserDaoImpl: User data
+UserDaoImpl->+ApplicationUtils: setResponse()
+ApplicationUtils->-UserDaoImpl: Response Object
+UserDaoImpl->-UserController: Response Object
+UserController->-User: HTTP 200 with Response Object
+else
+ApplicationUtils->+UserControllerAdvice: ResponseStatus Ex
+UserControllerAdvice->-User: HTTP 404 Empid Not Found
+end
+else
+UserController->+UserControllerAdvice: Bean validation errors
+UserControllerAdvice->-User: HTTP 400 Bad Request
+end
+
+
+

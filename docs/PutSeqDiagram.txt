@@ -1,0 +1,40 @@
+title User Service PUT flow
+actor User
+User->+UserController: PUT /userdetails/{empId}
+note over UserController: updateUserById()
+alt: Employee Id is numeric
+UserController->+UserDaoImpl: updateUserByEmpid(empId)
+UserDaoImpl->+UserDaoImpl: getUserDetails(empId)
+UserDaoImpl->Database: findById(empId)
+Database->UserDaoImpl: response
+UserDaoImpl->+ApplicationUtils: getOrElseThrow()
+alt: User is available in DB
+ApplicationUtils->-UserDaoImpl: user data
+UserDaoImpl->-UserDaoImpl: user data
+UserDaoImpl->+ApplicationUtils: setResponse()
+ApplicationUtils->-UserDaoImpl: Response Object
+UserDaoImpl->+ApplicationUtils: setDataToUserEntity
+ApplicationUtils->-UserDaoImpl: userEntity object
+opt: If Address object is populated in Request.
+UserDaoImpl->+ApplicationUtils: setDataToAddressEntity
+ApplicationUtils->-UserDaoImpl: userEntity with updated address object
+UserDaoImpl->Database: Save Address
+Database->UserDaoImpl: new Address Id
+note right of UserDaoImpl: New Address Id is set into User entity.
+end
+note right of UserDaoImpl: Else Address Id is set to null.
+UserDaoImpl->Database: Save User
+Database->UserDaoImpl: Success
+UserDaoImpl->-UserController: Void
+UserController->-User: HTTP 204 No Content
+else
+ApplicationUtils->+UserControllerAdvice: ResponseStatus Ex
+UserControllerAdvice->-User: HTTP 404 Empid Not Found
+end
+else
+UserController->+UserControllerAdvice: Bean validation errors
+UserControllerAdvice->-User: HTTP 400 Bad Request
+end
+
+
+
