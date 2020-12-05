@@ -144,7 +144,7 @@ The data is loaded into H2 When the application loads, if additional Mock data i
 | 341699250 | MR | FN14 | LN14 | FEMALE | 4550 KENT ST | SYDNEY | NSW | 2000 |
 
 [seqDiagram]: <>
-[DBModel]: <https://github.com/yagnatopalle/interview/blob/main/UserServiceDataModel.PNG>
-[pc]: <https://github.com/yagnatopalle/interview/blob/main/UserService.postman_collection.json>
-[swagger]: <https://github.com/yagnatopalle/interview/blob/main/swagger.yaml>
+[DBModel]: <UserServiceDataModel.PNG>
+[pc]: <UserService.postman_collection.json>
+[swagger]: <swagger.yaml>
 [se]: <https://editor.swagger.io>
