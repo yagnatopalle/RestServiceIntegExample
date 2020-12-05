@@ -29,7 +29,7 @@ public class ResponseData {
 	private Address address;
 
 	@JsonProperty("empId")
-	private Long empId = null;
+	private Long empId;
 
 	/**
 	 * @return the title

@@ -78,6 +78,9 @@ public class UserDAOImpl implements UserDAO {
 
 			log.debug("New record has been created in Address table and the resulting Id is set into User entity.");
 		}
+		else {
+			userEntity.setAddressId(null);
+		}
 
 		// saving user details to DB
 

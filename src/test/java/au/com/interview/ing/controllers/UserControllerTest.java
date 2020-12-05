@@ -24,7 +24,7 @@ class UserControllerTest {
 	@LocalServerPort
 	private int port;
 
-	private RequestData createRequestData(String ln, String title, String street, Integer postCd) {
+	private RequestData createRequestData(String ln, String title, String street, Integer postCd, boolean setAddress) {
 
 		RequestData req = new RequestData();
 		Address address = new Address();
@@ -39,7 +39,8 @@ class UserControllerTest {
 		address.setState("Updated State");
 		address.setStreet(Optional.ofNullable(street).orElse("Updated Street"));
 
-		req.setAddress(address);
+		if (setAddress)
+			req.setAddress(address);
 
 		return req;
 	}
@@ -153,7 +154,7 @@ class UserControllerTest {
 				.given()
 				.port(port)
 				.contentType(ContentType.JSON)
-				.body(createRequestData("Another Last name", "MRS", "20 Park St", 3000))
+				.body(createRequestData("Another Last name", "MRS", "20 Park St", 3000, true))
 				.when()
 				.put("/userdetails/588636421");
 
@@ -183,6 +184,64 @@ class UserControllerTest {
 		Assertions.assertTrue("20 Park St".equalsIgnoreCase(responseObj.getAddress().getStreet()));
 		Assertions.assertTrue("Updated City".equalsIgnoreCase(responseObj.getAddress().getCity()));
 		Assertions.assertTrue("Updated State".equalsIgnoreCase(responseObj.getAddress().getState()));
+	}
+
+	@Test
+	void testUpdateUserByIdMockDataNoAddress() {
+
+		/*
+		 * This test case will update the empId '881504505' with mock data.
+		 *
+		 * STEP - 1 calling GET and asserting to show that the data available and
+		 * asserted
+		 */
+
+		Response response = RestAssured.given().port(port).when().get("/userdetails/881504505");
+
+		ResponseData responseObj = response.getBody().as(ResponseData.class);
+
+		Assertions.assertTrue(881504505 == responseObj.getEmpId());
+		Assertions.assertTrue("MR".equalsIgnoreCase(responseObj.getTitle()));
+		Assertions.assertTrue("FN3".equalsIgnoreCase(responseObj.getFirstname()));
+		Assertions.assertTrue("LN3".equalsIgnoreCase(responseObj.getLastname()));
+		Assertions.assertTrue("MALE".equalsIgnoreCase(responseObj.getGender()));
+		Assertions.assertTrue(2000 == responseObj.getAddress().getPostcode());
+		Assertions.assertTrue("5690 KENT ST".equalsIgnoreCase(responseObj.getAddress().getStreet()));
+		Assertions.assertTrue("SYDNEY".equalsIgnoreCase(responseObj.getAddress().getCity()));
+		Assertions.assertTrue("NSW".equalsIgnoreCase(responseObj.getAddress().getState()));
+
+		/**
+		 * STEP - 2 calling private method to create request body with some mock data
+		 * along with some user provided data (Last name, title, street and post code)
+		 * AND NO ADDRESS
+		 */
+		response = RestAssured.given().port(port).contentType(ContentType.JSON)
+				.body(createRequestData("Another Last name", "MRS", "20 Park St", 3000, false)).when()
+				.put("/userdetails/881504505");
+
+		// validating status code, will be 204 for PUT
+		Assertions.assertEquals(204, response.getStatusCode());
+
+		/**
+		 * STEP - 3 Calling GET again to assert the updated record for same empId.
+		 *
+		 * The function which creates the request will update the object with below data
+		 *
+		 * ADDRESS OBJECT SHOULD BE NULL AS PUT DID NOT HAVE ADDRESS IN REQUEST.
+		 *
+		 * User Details firstname = 'Updated First Name' gender = 'Updated gender'
+		 */
+
+		response = RestAssured.given().port(port).when().get("/userdetails/881504505");
+		System.out.println(response.getBody().asString());
+		responseObj = response.getBody().as(ResponseData.class);
+
+		Assertions.assertTrue(881504505 == responseObj.getEmpId());
+		Assertions.assertTrue("MRS".equalsIgnoreCase(responseObj.getTitle()));
+		Assertions.assertTrue("Updated First Name".equalsIgnoreCase(responseObj.getFirstname()));
+		Assertions.assertTrue("Another Last name".equalsIgnoreCase(responseObj.getLastname()));
+		Assertions.assertTrue("Updated gender".equalsIgnoreCase(responseObj.getGender()));
+		Assertions.assertNull(responseObj.getAddress());
 	}
 
 	@Test
@@ -232,7 +291,7 @@ class UserControllerTest {
 
 		// random id
 		Response response = RestAssured.given().port(port).contentType(ContentType.JSON)
-				.body(createRequestData(null, null, null, null)).when().put("/userdetails/123");
+				.body(createRequestData(null, null, null, null, true)).when().put("/userdetails/123");
 
 		// validating status code
 		Assertions.assertEquals(404, response.getStatusCode());
@@ -244,7 +303,7 @@ class UserControllerTest {
 
 		// invalid id
 		Response response = RestAssured.given().port(port).contentType(ContentType.JSON)
-				.body(createRequestData(null, null, null, null)).when().put("/userdetails/abc");
+				.body(createRequestData(null, null, null, null, true)).when().put("/userdetails/abc");
 
 		// validating status code
 		Assertions.assertEquals(400, response.getStatusCode());
@@ -256,7 +315,7 @@ class UserControllerTest {
 
 		// invalid id
 		Response response = RestAssured.given().port(port).contentType(ContentType.JSON)
-				.body(createRequestData(null, null, null, 12345)).when().put("/userdetails/123");
+				.body(createRequestData(null, null, null, 12345, true)).when().put("/userdetails/123");
 
 		// validating status code
 		Assertions.assertEquals(400, response.getStatusCode());
@@ -271,12 +330,12 @@ class UserControllerTest {
 
 		// invalid id
 		Response response = RestAssured.given().port(port).contentType(ContentType.JSON)
-				.body(createRequestData(null, "Title with more than 20 chars", null, null)).when()
+				.body(createRequestData(null, "Title with more than 20 chars", null, null, true)).when()
 				.put("/userdetails/123");
 
 		// validating status code
 		Assertions.assertEquals(400, response.getStatusCode());
 		Arrays.asList(response.body().as(String[].class))
-				.forEach(a -> assertEquals("Title can be of max 20 characters.", a));
+		.forEach(a -> assertEquals("Title can be of max 20 characters.", a));
 	}
 }

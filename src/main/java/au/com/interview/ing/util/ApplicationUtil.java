@@ -58,7 +58,7 @@ public class ApplicationUtil {
 		response.setLastname(userEntity.getLastName());
 		response.setGender(userEntity.getGender());
 		response.setTitle(userEntity.getTitle());
-		response.setAddress(setAddressInResponse(userEntity.getAddress()));
+		response.setAddress(null == userEntity.getAddress() ? null : setAddressInResponse(userEntity.getAddress()));
 
 		return response;
 	}

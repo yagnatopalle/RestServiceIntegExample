@@ -22,7 +22,7 @@ public class UserEntity {
 	private long empId;
 
 	@Column(name = "addressid", nullable = false)
-	private long addressId;
+	private Long addressId;
 
 	@Column(name = "title", nullable = false)
 	private String title;
@@ -50,11 +50,11 @@ public class UserEntity {
 		return empId;
 	}
 
-	public long getAddressId() {
+	public Long getAddressId() {
 		return addressId;
 	}
 
-	public void setAddressId(long addressId) {
+	public void setAddressId(Long addressId) {
 		this.addressId = addressId;
 	}
 
